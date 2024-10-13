@@ -62,7 +62,7 @@ export class DialogComponent implements OnInit {
   addProduct(): void {
     this.httpService.createData(this.form.value).subscribe({
       next: () => {
-        console.log('Product added:',);
+        console.log('Product added: ',);
         this.form.reset();
         this.dialogRef.close('created');
       },

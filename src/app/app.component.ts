@@ -12,7 +12,8 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {PRODUCT_COLUMNS} from './mock/table-data';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
+import {LengthPipe} from './shared/pipes/length.pipe';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,9 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     DatePipe,
-    CurrencyPipe
+    CurrencyPipe,
+    UpperCasePipe,
+    LengthPipe
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -58,14 +61,16 @@ export class AppComponent implements OnInit {
   }
 
   createProduct() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    this.dialog.open(DialogComponent, {
       width: '40%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    }).afterClosed().subscribe({
+      next: (res: string) => {
+        if (res === 'created') this.getAllProducts();
+      },
+      error: err => console.log(err)
     });
   }
+
 
   private getAllProducts(): void {
     this.httpService.readData().subscribe({
