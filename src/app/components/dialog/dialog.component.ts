@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -10,6 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgForOf} from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-dialog',
@@ -37,6 +38,10 @@ export class DialogComponent implements OnInit {
   productConditionList = PRODUCT_CONDITION_LIST;
 
   private fb = inject(FormBuilder);
+  private httpService = inject(HttpService);
+
+  constructor(public dialogRef: MatDialogRef<DialogComponent>) {
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -50,6 +55,16 @@ export class DialogComponent implements OnInit {
       productCondition: ['', [Validators.required]],
       price: ['', [Validators.required]],
       comment: ['', [Validators.required]],
+    });
+  }
+
+  addProduct(): void {
+    this.httpService.createData(this.form.value).subscribe({
+      next: () => {
+        console.log('Product added:',);
+        this.form.reset();
+        this.dialogRef.close('created');
+      }
     });
   }
 }
