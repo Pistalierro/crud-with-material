@@ -40,7 +40,8 @@ export class DialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>) {
+  constructor(public dialogRef: MatDialogRef<DialogComponent>,
+  ) {
   }
 
   ngOnInit(): void {
@@ -64,7 +65,8 @@ export class DialogComponent implements OnInit {
         console.log('Product added:',);
         this.form.reset();
         this.dialogRef.close('created');
-      }
+      },
+      error: err => console.log(err)
     });
   }
 }

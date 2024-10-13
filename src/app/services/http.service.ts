@@ -4,6 +4,7 @@ import {ProductInterface} from '../shared/types/product.interface';
 import {API_POINTS} from '../shared/mock/api-points';
 import {RequestProductInterface} from '../shared/types/requestProduct.interface';
 import {map, Observable} from 'rxjs';
+import {ResponseProductInterface} from '../shared/types/responseProduct.interface';
 
 
 @Injectable({
@@ -28,8 +29,13 @@ export class HttpService {
       }));
   }
 
-  readData() {
-    return this.http.get(`${this.apiUrl}${API_POINTS.productList}.json`, this.httpOptions);
+  readData(): Observable<ProductInterface[]> {
+    return this.http.get<ResponseProductInterface>(`${this.apiUrl}${API_POINTS.productList}.json`, this.httpOptions).pipe(
+      map((res) => {
+        Object.keys(res).forEach((key: string) => this.productList.push({key, ...res[key]}));
+        return this.productList;
+      })
+    );
   }
 
   updateData() {
