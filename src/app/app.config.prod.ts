@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
+    provideHttpClient(),
     {provide: 'API_URL', useValue: environment.aipUrl},
     {provide: LOCALE_ID, useValue: 'uk'},
 

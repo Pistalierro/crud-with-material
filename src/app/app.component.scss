@@ -1,0 +1,17 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar,
+.mat-toolbar {
+  background-color: #D7E3FE;
+  color: #015CBB;
+
+  button {
+    color: #015CBB;
+  }
+
+  .add-btn {
+    color: blue;
+  }
+}

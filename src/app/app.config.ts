@@ -5,6 +5,7 @@ import locateUK from '@angular/common/locales/uk';
 import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const environment = {
   production: false,
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     {provide: 'API_URL', useValue: environment.aipUrl},
-    {provide: LOCALE_ID, useValue: 'uk'},
+    {provide: LOCALE_ID, useValue: 'uk'}, provideAnimationsAsync(),
 
   ]
 };
