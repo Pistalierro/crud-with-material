@@ -7,7 +7,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
 
 const environment = {
-  production: false,
+  production: true,
   aipUrl: 'https://crud-with-materialui-9a269-default-rtdb.europe-west1.firebasedatabase.app'
 };
 
