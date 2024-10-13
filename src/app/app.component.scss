@@ -6,6 +6,7 @@
 .mat-toolbar {
   background-color: #D7E3FE;
   color: #015CBB;
+  padding: 0;
 
   button {
     color: #015CBB;
@@ -14,4 +15,16 @@
   .add-btn {
     color: blue;
   }
+}
+
+.comment-width {
+  width: 30%;
+}
+
+mat-paginator {
+  background-color: lighten(lightgrey, 10%);
+}
+
+.actions-width {
+  width: 160px;
 }

@@ -10,3 +10,68 @@
     </mat-toolbar>
   </div>
 </div>
+
+<div class="container">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. Mia">
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table [dataSource]="dataSource" mat-table matSort>
+
+      <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Название</th>
+        <td *matCellDef="let row" mat-cell> {{ row.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Категория</th>
+        <td *matCellDef="let row" mat-cell> {{ row.category }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Цена</th>
+        <td *matCellDef="let row" mat-cell> {{ row.price | currency: 'UAH': 'symbol': '1.0' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="productCondition">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Состояние</th>
+        <td *matCellDef="let row" mat-cell> {{ row.productCondition }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Дата</th>
+        <td *matCellDef="let row" mat-cell> {{ row.date | date: 'dd.MM.yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="comment">
+        <th *matHeaderCellDef class="comment-width" mat-header-cell mat-sort-header> Описание</th>
+        <td *matCellDef="let row" class="comment-width" mat-cell> {{ row.comment }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef class="actions-width" mat-header-cell mat-sort-header> Действия</th>
+        <td *matCellDef="let row" class="actions-width" mat-cell>
+          <button mat-button>
+            <mat-icon color="accent">edit</mat-icon>
+          </button>
+          <button mat-button>
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+      <tr *matNoDataRow class="mat-row">
+        <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+
+</div>
