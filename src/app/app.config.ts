@@ -5,7 +5,8 @@ import locateUK from '@angular/common/locales/uk';
 import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 const environment = {
   production: false,
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
+    provideNativeDateAdapter(),
     {provide: 'API_URL', useValue: environment.aipUrl},
     {provide: LOCALE_ID, useValue: 'uk'}, provideAnimationsAsync(),
 

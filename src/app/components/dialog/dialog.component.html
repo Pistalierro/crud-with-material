@@ -1,1 +1,48 @@
-<p>dialog works!</p>
+<h2 mat-dialog-title>Форма добавления товара:</h2>
+<mat-dialog-content class="mat-typography">
+
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ formLabels.name }}</mat-label>
+      <input formControlName="name" matInput placeholder="{{formPlaceholders.name}}"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ formLabels.category }}</mat-label>
+      <mat-select formControlName="category" placeholder="{{formPlaceholders.category}}">
+        <mat-option *ngFor="let category of productCategories" [value]="category">{{ category }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ formLabels.date }}</mat-label>
+      <input [matDatepicker]="picker" formControlName="date" matInput placeholder="{{formPlaceholders.date}}">
+      <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <label id="example-radio-group-label">{{ formLabels.productCondition }}</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="productCondition">
+      <mat-radio-button *ngFor="let condition of productConditionList" [value]="condition"
+                        class="example-radio-button">{{ condition }}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ formLabels.price }}</mat-label>
+      <input formControlName="price" matInput placeholder="{{formPlaceholders.price}}" type="number"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ formLabels.comment }}</mat-label>
+      <textarea cdkAutosizeMaxRows="5" cdkAutosizeMinRows="1" cdkTextareaAutosize formControlName="comment" matInput
+                placeholder="{{formPlaceholders.comment}}"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Отменить</button>
+  <button [disabled]="form.invalid" color="accent" mat-flat-button>Сохранить</button>
+</mat-dialog-actions>

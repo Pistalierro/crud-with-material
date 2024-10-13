@@ -5,6 +5,7 @@ import locateUK from '@angular/common/locales/uk';
 import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 const environment = {
   production: true,
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideHttpClient(),
+    provideNativeDateAdapter(),
     {provide: 'API_URL', useValue: environment.aipUrl},
     {provide: LOCALE_ID, useValue: 'uk'},
 
