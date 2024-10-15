@@ -56,7 +56,8 @@ export class DialogComponent implements OnInit {
 
   onDateChange(event: any): void {
     console.log('Дата выбрана:', event.value);
-    this.datepicker.close();
+    setTimeout(() => this.datepicker.close(), 0);
+    (document.activeElement as HTMLElement)?.blur();
   }
 
   onPickerClosed(): void {

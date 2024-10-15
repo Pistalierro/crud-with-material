@@ -70,10 +70,7 @@ export class AppComponent implements OnInit {
       width: '40%',
     }).afterClosed().subscribe({
       next: (res: string) => {
-        if (res === 'created') {
-          this.getAllProducts();
-        }
-
+        if (res === 'created') this.getAllProducts();
       },
       error: err => console.log(err)
     });
@@ -85,10 +82,7 @@ export class AppComponent implements OnInit {
       data: row
     }).afterClosed().subscribe({
       next: (res: string) => {
-        if (res === 'updated') {
-          this.getAllProducts();
-        }
-
+        if (res === 'updated') this.getAllProducts();
       }
     });
   }
@@ -98,7 +92,6 @@ export class AppComponent implements OnInit {
       next: () => this.getAllProducts()
     });
   }
-
 
   private getAllProducts(): void {
     this.httpService.readData().subscribe({

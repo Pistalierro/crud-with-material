@@ -7,6 +7,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
+import {provideAnimations} from '@angular/platform-browser/animations';
 
 const environment = {
   production: false,
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideNativeDateAdapter(),
     MatNativeDateModule,
+    provideAnimations(),
     {provide: 'API_URL', useValue: environment.aipUrl},
     {provide: LOCALE_ID, useValue: 'uk'}, provideAnimationsAsync(),
     {provide: MAT_DATE_LOCALE, useValue: 'uk'},
