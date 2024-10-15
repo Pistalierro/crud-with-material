@@ -6,7 +6,7 @@ import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 
 const environment = {
   production: false,
@@ -21,8 +21,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideNativeDateAdapter(),
+    MatNativeDateModule,
     {provide: 'API_URL', useValue: environment.aipUrl},
     {provide: LOCALE_ID, useValue: 'uk'}, provideAnimationsAsync(),
-
+    {provide: MAT_DATE_LOCALE, useValue: 'uk'},
   ]
 };

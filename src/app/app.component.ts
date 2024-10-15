@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import {PRODUCT_COLUMNS} from './mock/table-data';
 import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
 import {LengthPipe} from './shared/pipes/length.pipe';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,10 @@ import {LengthPipe} from './shared/pipes/length.pipe';
     DatePipe,
     CurrencyPipe,
     UpperCasePipe,
-    LengthPipe
+    LengthPipe,
+  ],
+  providers: [
+    provideNativeDateAdapter(),
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -46,6 +50,7 @@ export class AppComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
   private httpService = inject(HttpService);
+
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -65,9 +70,32 @@ export class AppComponent implements OnInit {
       width: '40%',
     }).afterClosed().subscribe({
       next: (res: string) => {
-        if (res === 'created') this.getAllProducts();
+        if (res === 'created') {
+          this.getAllProducts();
+        }
+
       },
       error: err => console.log(err)
+    });
+  }
+
+  updateProduct(row: ProductInterface): void {
+    this.dialog.open(DialogComponent, {
+      width: '40%',
+      data: row
+    }).afterClosed().subscribe({
+      next: (res: string) => {
+        if (res === 'updated') {
+          this.getAllProducts();
+        }
+
+      }
+    });
+  }
+
+  deleteProduct(key: string): void {
+    this.httpService.deleteData(key).subscribe({
+      next: () => this.getAllProducts()
     });
   }
 

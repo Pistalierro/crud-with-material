@@ -18,7 +18,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Выберите дату</mat-label>
-      <input (dateChange)="onDateChange($event)" [matDatepicker]="datepicker" matInput/>
+      <input (dateChange)="onDateChange($event)" [matDatepicker]="datepicker" formControlName="date" matInput/>
       <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #datepicker>
         <mat-datepicker-actions>
@@ -50,5 +50,6 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Отменить</button>
-  <button (click)="addProduct()" [disabled]="form.invalid" color="accent" mat-flat-button>Сохранить</button>
+  <button (click)="!editData ? addProduct() : updateProduct()" [disabled]="form.invalid" color="accent" mat-flat-button>{{ actionBtn }}
+  </button>
 </mat-dialog-actions>

@@ -22,7 +22,7 @@
 
       <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header> Название</th>
-        <td *matCellDef="let row" mat-cell> {{ row.name }}</td>
+        <td *matCellDef="let row" mat-cell> {{ row.name | length: 20 }}</td>
       </ng-container>
 
       <ng-container matColumnDef="category">
@@ -53,10 +53,10 @@
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef class="actions-width" mat-header-cell mat-sort-header> Действия</th>
         <td *matCellDef="let row" class="actions-width" mat-cell>
-          <button mat-button>
+          <button (click)="updateProduct(row)" mat-button>
             <mat-icon color="accent">edit</mat-icon>
           </button>
-          <button mat-button>
+          <button (click)="deleteProduct(row.key)" mat-button>
             <mat-icon color="warn">delete</mat-icon>
           </button>
         </td>
