@@ -17,9 +17,14 @@
 
     <mat-form-field appearance="outline">
       <mat-label>{{ formLabels.date }}</mat-label>
-      <input [matDatepicker]="picker" formControlName="date" matInput placeholder="{{formPlaceholders.date}}">
-      <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <input [matDatepicker]="datepicker" matInput/>
+      <mat-datepicker-toggle [for]="datepicker" matIconSuffix></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Отменить</button>
+          <button mat-raised-button matDatepickerApply>Сохранить</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
     </mat-form-field>
 
     <label id="example-radio-group-label">{{ formLabels.productCondition }}</label>

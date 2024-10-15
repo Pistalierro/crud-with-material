@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -11,10 +11,12 @@ import {NgForOf} from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {HttpService} from '../../services/http.service';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     NgForOf,
     ReactiveFormsModule,
@@ -26,6 +28,7 @@ import {HttpService} from '../../services/http.service';
     MatDatepickerModule,
     MatRadioModule
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss'
 })
