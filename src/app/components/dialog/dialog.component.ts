@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {PRODUCT_CATEGORIES, PRODUCT_CONDITION_LIST} from '../../mock/product-dat
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgForOf} from '@angular/common';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {HttpService} from '../../services/http.service';
 import {provideNativeDateAdapter} from '@angular/material/core';
@@ -34,17 +34,22 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 })
 export class DialogComponent implements OnInit {
 
+  @ViewChild('picker') datepicker!: MatDatepicker<any>; // Доступ к Datepicker
   form!: FormGroup;
   formLabels = FORM_LABELS;
   formPlaceholders = FORM_PLACEHOLDERS;
   productCategories = PRODUCT_CATEGORIES;
   productConditionList = PRODUCT_CONDITION_LIST;
-
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
   ) {
+  }
+
+  onDateChange(event: any): void {
+    console.log('Дата выбрана:', event.value);
+    this.datepicker.close();
   }
 
   ngOnInit(): void {
