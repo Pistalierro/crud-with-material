@@ -34,7 +34,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 })
 export class DialogComponent implements OnInit {
 
-  @ViewChild('picker') datepicker!: MatDatepicker<any>; // Доступ к Datepicker
+  @ViewChild('picker') datepicker!: MatDatepicker<any>;
   form!: FormGroup;
   formLabels = FORM_LABELS;
   formPlaceholders = FORM_PLACEHOLDERS;
@@ -50,6 +50,10 @@ export class DialogComponent implements OnInit {
   onDateChange(event: any): void {
     console.log('Дата выбрана:', event.value);
     this.datepicker.close();
+  }
+
+  onPickerClosed(): void {
+    console.log('Datepicker закрыт');
   }
 
   ngOnInit(): void {

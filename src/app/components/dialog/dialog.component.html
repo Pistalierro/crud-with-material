@@ -15,19 +15,12 @@
       </mat-select>
     </mat-form-field>
 
-    <!--    <mat-form-field appearance="outline">-->
-    <!--      <mat-label>{{ formLabels.date }}</mat-label>-->
-    <!--      <input (dateChange)="onDateChange($event)" [matDatepicker]="datepicker" matInput/>-->
-    <!--      <mat-datepicker-toggle [for]="datepicker" matIconSuffix></mat-datepicker-toggle>-->
-    <!--      <mat-datepicker #datepicker></mat-datepicker>-->
-    <!--    </mat-form-field>-->
-
 
     <mat-form-field appearance="outline">
       <mat-label>Выберите дату</mat-label>
       <input (dateChange)="onDateChange($event)" [matDatepicker]="picker" matInput/>
       <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker #picker (closed)="onPickerClosed()"></mat-datepicker>
     </mat-form-field>
 
     <label id="example-radio-group-label">{{ formLabels.productCondition }}</label>
