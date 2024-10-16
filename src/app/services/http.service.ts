@@ -44,7 +44,6 @@ export class HttpService {
     return this.http.put<ProductInterface>(`${this.apiUrl}${API_POINTS.productList}/${key}.json`, product, this.httpOptions).pipe(
       map(() => this.productList[key as any] = product),
     );
-
   }
 
   deleteData(key: string): Observable<ProductInterface[]> {

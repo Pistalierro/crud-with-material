@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, inject, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, inject, input, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -44,7 +44,7 @@ export class DialogComponent implements OnInit {
   actionBtn: string = 'Сохранить';
 
   @ViewChild('datepicker') datepicker!: MatDatepicker<any>;
-
+  protected readonly input = input;
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
   private errorService = inject(ErrorService);
@@ -59,7 +59,7 @@ export class DialogComponent implements OnInit {
 
   onDateChange(event: any): void {
     console.log('Дата выбрана:', event.value);
-    setTimeout(() => this.datepicker.close(), 0);
+    setTimeout(() => this.datepicker.close(), 200);
     (document.activeElement as HTMLElement)?.blur();
   }
 
@@ -98,5 +98,4 @@ export class DialogComponent implements OnInit {
         error: this.errorService.errorHandler
       });
   }
-
 }
