@@ -94,6 +94,7 @@ export class DialogComponent implements OnInit {
       this.httpService.updateData(this.form.value, this.editData.key).subscribe({
         next: () => this.dialogRef.close('updated'),
         error: err => console.log(err)
+
       });
   }
 
