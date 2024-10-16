@@ -83,7 +83,8 @@ export class AppComponent implements OnInit {
     }).afterClosed().subscribe({
       next: (res: string) => {
         if (res === 'updated') this.getAllProducts();
-      }
+      },
+      error: err => console.log(err)
     });
   }
 

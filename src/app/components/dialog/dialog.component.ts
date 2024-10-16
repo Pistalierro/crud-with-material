@@ -43,6 +43,7 @@ export class DialogComponent implements OnInit {
   actionBtn: string = 'Сохранить';
 
   @ViewChild('datepicker') datepicker!: MatDatepicker<any>;
+
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
 
@@ -58,11 +59,6 @@ export class DialogComponent implements OnInit {
     console.log('Дата выбрана:', event.value);
     setTimeout(() => this.datepicker.close(), 0);
     (document.activeElement as HTMLElement)?.blur();
-  }
-
-  onPickerClosed(): void {
-    console.log('Datepicker закрыт');
-    this.datepicker.close();
   }
 
   initializeForm(): void {
@@ -96,7 +92,8 @@ export class DialogComponent implements OnInit {
   updateProduct(): void {
     if (this.editData.key)
       this.httpService.updateData(this.form.value, this.editData.key).subscribe({
-        next: () => this.dialogRef.close('updated')
+        next: () => this.dialogRef.close('updated'),
+        error: err => console.log(err)
       });
   }
 

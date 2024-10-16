@@ -48,7 +48,7 @@ export class HttpService {
   }
 
   deleteData(key: string): Observable<ProductInterface[]> {
-    return this.http.delete<ProductInterface>(`${this.apiUrl}${API_POINTS.productList}/${key}.json`).pipe(
+    return this.http.delete<ProductInterface>(`${this.apiUrl}${API_POINTS.productList}/${key}.json`, this.httpOptions).pipe(
       map(() => this.productList.splice(key as any, 1)),
     );
   }

@@ -17,15 +17,10 @@
 
 
     <mat-form-field appearance="outline">
-      <mat-label>Выберите дату</mat-label>
+      <mat-label>{{ formLabels.date }}</mat-label>
       <input (dateChange)="onDateChange($event)" [matDatepicker]="datepicker" formControlName="date" matInput/>
       <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #datepicker>
-        <mat-datepicker-actions>
-          <button mat-button matDatepickerCancel>Отменить</button>
-          <button (click)="onPickerClosed()" color="accent" mat-flat-button matDatepickerApply>Сохранить</button>
-        </mat-datepicker-actions>
-      </mat-datepicker>
+      <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
 
     <label id="example-radio-group-label">{{ formLabels.productCondition }}</label>
