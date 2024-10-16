@@ -13,6 +13,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {HttpService} from '../../services/http.service';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {ProductInterface} from '../../shared/types/product.interface';
+import {ErrorService} from '../../shared/services/error.service';
 
 @Component({
   selector: 'app-dialog',
@@ -46,6 +47,7 @@ export class DialogComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
+  private errorService = inject(ErrorService);
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public editData: any) {
@@ -84,7 +86,7 @@ export class DialogComponent implements OnInit {
           this.form.reset();
           this.dialogRef.close('created');
         },
-        error: err => console.log(err)
+        error: this.errorService.errorHandler
       });
     }
   }
@@ -93,8 +95,7 @@ export class DialogComponent implements OnInit {
     if (this.editData.key)
       this.httpService.updateData(this.form.value, this.editData.key).subscribe({
         next: () => this.dialogRef.close('updated'),
-        error: err => console.log(err)
-
+        error: this.errorService.errorHandler
       });
   }
 

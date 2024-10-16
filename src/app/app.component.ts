@@ -15,6 +15,7 @@ import {PRODUCT_COLUMNS} from './mock/table-data';
 import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
 import {LengthPipe} from './shared/pipes/length.pipe';
 import {provideNativeDateAdapter} from '@angular/material/core';
+import {ErrorService} from './shared/services/error.service';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
   private httpService = inject(HttpService);
-
+  private errorService = inject(ErrorService);
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit {
       next: (res: string) => {
         if (res === 'created') this.getAllProducts();
       },
-      error: err => console.log(err)
+      error: this.errorService.errorHandler
     });
   }
 
@@ -84,13 +85,14 @@ export class AppComponent implements OnInit {
       next: (res: string) => {
         if (res === 'updated') this.getAllProducts();
       },
-      error: err => console.log(err)
+      error: this.errorService.errorHandler
     });
   }
 
   deleteProduct(key: string): void {
     this.httpService.deleteData(key).subscribe({
-      next: () => this.getAllProducts()
+      next: () => this.getAllProducts(),
+      error: this.errorService.errorHandler
     });
   }
 
@@ -101,7 +103,7 @@ export class AppComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error: err => console.log(err)
+      error: this.errorService.errorHandler
     });
   }
 }
