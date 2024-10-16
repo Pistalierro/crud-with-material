@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, inject, input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, inject, input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {PRODUCT_CATEGORIES, PRODUCT_CONDITION_LIST} from '../../mock/product-dat
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgForOf} from '@angular/common';
-import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {HttpService} from '../../services/http.service';
 import {provideNativeDateAdapter} from '@angular/material/core';
@@ -43,7 +43,6 @@ export class DialogComponent implements OnInit {
   productConditionList = PRODUCT_CONDITION_LIST;
   actionBtn: string = 'Сохранить';
 
-  @ViewChild('datepicker') datepicker!: MatDatepicker<any>;
   protected readonly input = input;
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
@@ -55,12 +54,6 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-  }
-
-  onDateChange(event: any): void {
-    console.log('Дата выбрана:', event.value);
-    setTimeout(() => this.datepicker.close(), 200);
-    (document.activeElement as HTMLElement)?.blur();
   }
 
   initializeForm(): void {

@@ -18,9 +18,9 @@
 
     <mat-form-field appearance="outline">
       <mat-label>{{ formLabels.date }}</mat-label>
-      <input (dateChange)="onDateChange($event)" [matDatepicker]="datepicker" formControlName="date" matInput/>
-      <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #datepicker></mat-datepicker>
+      <input [matDatepicker]="picker" matInput>
+      <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <label id="example-radio-group-label">{{ formLabels.productCondition }}</label>
