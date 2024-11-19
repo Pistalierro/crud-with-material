@@ -16,4 +16,6 @@ export class HttpService {
     const id = doc(collection(this.firestore, 'productsList')).id;
     return from(setDoc(doc(this.firestore, 'productsList', id), {...product, id}));
   }
+
+  
 }

@@ -4,7 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {DialogComponent} from './dialog/dialog.component';
+
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,8 @@ import {DialogComponent} from './dialog/dialog.component';
 export class AppComponent {
   readonly dialog = inject(MatDialog);
 
-  openDialog() {
+  async openDialog() {
+    const {DialogComponent} = await import('./dialog/dialog.component');
     this.dialog.open(DialogComponent, {
       width: '40%',
     });
