@@ -9,6 +9,7 @@ import {PRODUCT_CATEGORIES, PRODUCT_CONDITION} from '../mock/form-data';
 import {NgForOf} from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {HttpService} from '../shared/services/http.service';
 
 @Component({
   selector: 'app-dialog',
@@ -33,6 +34,7 @@ export class DialogComponent implements OnInit {
   productCondition: string[] = PRODUCT_CONDITION;
 
   private fb = inject(FormBuilder);
+  private httpService = inject(HttpService);
 
   ngOnInit() {
     this.initializeForm();
@@ -46,6 +48,16 @@ export class DialogComponent implements OnInit {
       condition: [null, [Validators.required]],
       price: [null, [Validators.required]],
       comment: [null, [Validators.required]],
+    });
+  }
+
+  addProduct(): void {
+    this.httpService.createData(this.form.value).pipe().subscribe({
+      next: () => {
+        console.log('Товар успешно добавлен');
+        this.form.reset();
+      },
+      error: err => console.log(err),
     });
   }
 }

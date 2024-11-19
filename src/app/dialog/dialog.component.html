@@ -9,7 +9,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Категория</mat-label>
       <mat-select formControlName="category" placeholder="Выберите категорию из списка">
-        <mat-option *ngFor="let productCategory of productCategories" value="one">{{ productCategory }}</mat-option>
+        <mat-option *ngFor="let productCategory of productCategories" [value]="productCategory">{{ productCategory }}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -32,7 +32,7 @@
 
 
     <mat-form-field appearance="outline">
-      <mat-label>Textarea</mat-label>
+      <mat-label>Информация о товаре</mat-label>
       <textarea cdkAutosizeMaxRows="5" cdkAutosizeMinRows="1"
                 cdkTextareaAutosize formControlName="comment" matInput
       ></textarea>
@@ -42,5 +42,5 @@
 
 <mat-dialog-actions>
   <button color="warn" mat-button mat-dialog-close>Отменить</button>
-  <button [disabled]="form.invalid" mat-dialog-close mat-flat-button>Сохранить</button>
+  <button (click)="addProduct()" [disabled]="form.invalid" mat-dialog-close mat-flat-button>Сохранить</button>
 </mat-dialog-actions>
