@@ -6,7 +6,11 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, LOCALE_ID, provideZoneChangeDetection} from '@angular/core';
+import {registerLocaleData} from '@angular/common';
+import localeUk from '@angular/common/locales/uk';
+
+registerLocaleData(localeUk, 'uk');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +30,6 @@ export const appConfig: ApplicationConfig = {
     })),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    {provide: LOCALE_ID, useValue: 'uk'}
   ]
 };

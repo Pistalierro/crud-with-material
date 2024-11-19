@@ -1,10 +1,68 @@
-<mat-toolbar>
+<div class="toolbar">
   <div class="container">
-    <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>My App</span>
-    <span class="toolbar-spacer"></span>
-    <button (click)="openDialog()" mat-button>Добавить товар</button>
+    <mat-toolbar>
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>My App</span>
+      <span class="toolbar-spacer"></span>
+      <button (click)="openDialog()" mat-button>Добавить товар</button>
+    </mat-toolbar>
   </div>
-</mat-toolbar>
+</div>
+
+<div class="container">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Начните вводить данные о товаре...">
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <div class="responsive-table-wrapper">
+      <table [dataSource]="dataSource" mat-table matSort>
+
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Наименование</th>
+          <td *matCellDef="let row" mat-cell> {{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Категория</th>
+          <td *matCellDef="let row" mat-cell> {{ row.category | uppercase }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="condition">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Состояние</th>
+          <td *matCellDef="let row" mat-cell> {{ row.condition }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Дата</th>
+          <td *matCellDef="let row" mat-cell> {{ row.date | date: "dd.MM.yyyy" }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Цена, грн.</th>
+          <td *matCellDef="let row" mat-cell> {{ row.price | currency:'UAH':'symbol':'1.0-0':'uk' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="comment">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Информация</th>
+          <td *matCellDef="let row" mat-cell> {{ row.comment }}</td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr *matNoDataRow class="mat-row">
+          <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+        </tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+</div>
+

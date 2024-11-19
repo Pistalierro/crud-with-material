@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -29,9 +29,12 @@ import {HttpService} from '../shared/services/http.service';
   styleUrl: './dialog.component.scss'
 })
 export class DialogComponent implements OnInit {
+
   form!: FormGroup;
   productCategories: string[] = PRODUCT_CATEGORIES;
   productCondition: string[] = PRODUCT_CONDITION;
+
+  dialogRef = inject(MatDialogRef<DialogComponent>);
 
   private fb = inject(FormBuilder);
   private httpService = inject(HttpService);
@@ -52,12 +55,15 @@ export class DialogComponent implements OnInit {
   }
 
   addProduct(): void {
-    this.httpService.createData(this.form.value).pipe().subscribe({
-      next: () => {
-        console.log('Товар успешно добавлен');
-        this.form.reset();
-      },
-      error: err => console.log(err),
-    });
+    if (this.form.valid) {
+      this.httpService.createData(this.form.value).subscribe({
+        next: () => {
+          console.log('Товар успешно добавлен');
+          this.form.reset();
+          this.dialogRef.close('created');
+        },
+        error: err => console.log(err),
+      });
+    }
   }
 }
