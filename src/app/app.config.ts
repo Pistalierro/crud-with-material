@@ -5,6 +5,7 @@ import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 
 export const appConfig: ApplicationConfig = {
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     provideFirebaseApp(() => initializeApp({
       'projectId': 'crud-with-materialui-9a269',
       'appId': '1:272343668005:web:8c28956b838bd2aa5036cc',

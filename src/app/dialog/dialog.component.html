@@ -1,24 +1,46 @@
 <h2 mat-dialog-title>Форма добавления товара</h2>
 <mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Наименование товара</mat-label>
+      <input formControlName="name" matInput placeholder="Укажите название товара...">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Select</mat-label>
-    <mat-select>
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Textarea</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Категория</mat-label>
+      <mat-select formControlName="category" placeholder="Выберите категорию из списка">
+        <mat-option *ngFor="let productCategory of productCategories" value="one">{{ productCategory }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Выберите дату</mat-label>
+      <input [matDatepicker]="picker" formControlName="date" matInput>
+      <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-radio-group class="radio-group" formControlName="condition">
+      <mat-radio-button *ngFor="let condition of productCondition" [value]="condition" class="radio-button mat-warn">{{ condition }}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Цена</mat-label>
+      <input formControlName="price" matInput placeholder="Укажите цену товара..." type="number">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Textarea</mat-label>
+      <textarea cdkAutosizeMaxRows="5" cdkAutosizeMinRows="1"
+                cdkTextareaAutosize formControlName="comment" matInput
+      ></textarea>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
+  <button color="warn" mat-button mat-dialog-close>Отменить</button>
+  <button [disabled]="form.invalid" mat-dialog-close mat-flat-button>Сохранить</button>
 </mat-dialog-actions>
