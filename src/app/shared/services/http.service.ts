@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ProductInterface} from '../types/product.interface';
-import {from, map, Observable} from 'rxjs';
-import {collection, collectionData, doc, Firestore, setDoc} from '@angular/fire/firestore';
+import {catchError, from, map, Observable} from 'rxjs';
+import {collection, collectionData, deleteDoc, doc, Firestore, setDoc, updateDoc} from '@angular/fire/firestore';
 import {Timestamp} from 'firebase/firestore'; // Импортируем Timestamp
 
 @Injectable({
@@ -28,5 +28,25 @@ export class HttpService {
         }))
       )
     ) as Observable<ProductInterface[]>;
+  }
+
+  updateData(collectionName: string, documentId: string, data: any): Observable<void> {
+    const documentRef = doc(this.firestore, `${collectionName}/${documentId}`);
+    return from(updateDoc(documentRef, data)).pipe(
+      catchError(err => {
+        console.error('Ошибка при обновлении документа:', err);
+        throw err;
+      })
+    );
+  }
+
+  deleteData(collectionName: string, documentId: string): Observable<void> {
+    const documentRef = doc(this.firestore, `${collectionName}/${documentId}`);
+    return from(deleteDoc(documentRef)).pipe(
+      catchError(err => {
+        console.error('Ошибка при удалении документа:', err);
+        throw err;
+      })
+    );
   }
 }

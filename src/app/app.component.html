@@ -6,7 +6,7 @@
       </button>
       <span>My App</span>
       <span class="toolbar-spacer"></span>
-      <button (click)="openDialog()" mat-button>Добавить товар</button>
+      <button (click)="createProduct()" mat-button>Добавить товар</button>
     </mat-toolbar>
   </div>
 </div>
@@ -47,8 +47,20 @@
         </ng-container>
 
         <ng-container matColumnDef="comment">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header> Информация</th>
-          <td *matCellDef="let row" mat-cell> {{ row.comment | textLength: 40 }}</td>
+          <th *matHeaderCellDef class="comment" mat-header-cell mat-sort-header> Информация</th>
+          <td *matCellDef="let row" class="comment" mat-cell> {{ row.comment | textLength: 40 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions" mat-header-cell> Действия</th>
+          <td *matCellDef="let row" class="actions" mat-cell>
+            <button (click)="updateProduct(row)" color="primary" mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteProduct(row.id)" color="warn" mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
         </ng-container>
 
         <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

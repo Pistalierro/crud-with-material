@@ -42,5 +42,5 @@
 
 <mat-dialog-actions>
   <button color="warn" mat-button mat-dialog-close>Отменить</button>
-  <button (click)="addProduct()" [disabled]="form.invalid" mat-flat-button>Сохранить</button>
+  <button (click)="!editData ? addProduct() : updateProduct()" [disabled]="form.invalid" mat-flat-button>{{ actionBtn }}</button>
 </mat-dialog-actions>

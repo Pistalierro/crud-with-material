@@ -14,6 +14,8 @@ import {TABLE_COLUMNS} from './mock/table-data';
 import {ProductInterface} from './shared/types/product.interface';
 import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
 import {TextLengthPipe} from './shared/pipes/text-length.pipe';
+import {catchError, from, map, Observable, of, switchAll, tap} from 'rxjs';
+import {DialogComponent} from './dialog/dialog.component';
 
 
 @Component({
@@ -54,13 +56,6 @@ export class AppComponent implements OnInit {
     this.getAllProducts();
   }
 
-  async openDialog() {
-    const {DialogComponent} = await import('./dialog/dialog.component');
-    this.dialog.open(DialogComponent, {
-      width: '40%',
-    });
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -68,6 +63,43 @@ export class AppComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openDialog(data: any = null, expectedResult: string): Observable<string | undefined> {
+    return from(import('./dialog/dialog.component')).pipe(
+      map(({DialogComponent}) => {
+        return this.dialog.open(DialogComponent, {
+          width: '40%',
+          data
+        }).afterClosed();
+      }),
+      switchAll(),
+      tap((res: string) => {
+        if (res === expectedResult) {
+          console.log(`Товар успешно ${expectedResult.trim()}`);
+        }
+      }),
+      catchError(err => {
+        console.error('Ошибка при закрытии диалогового окна:', err);
+        return of(undefined);
+      })
+    );
+  }
+
+  createProduct(): void {
+    this.openDialog(null, 'created').subscribe();
+  }
+
+  updateProduct(row: ProductInterface): void {
+    this.openDialog(row, 'updated').subscribe();
+  }
+
+  deleteProduct(id: string): void {
+    this.httpService.deleteData('productsList', id).subscribe({
+      next: () => {
+        console.log('Товар успешно удален');
+      }
+    });
   }
 
   private getAllProducts(): void {
