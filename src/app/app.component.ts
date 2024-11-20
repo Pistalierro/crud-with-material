@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {TABLE_COLUMNS} from './mock/table-data';
 import {ProductInterface} from './shared/types/product.interface';
 import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
+import {TextLengthPipe} from './shared/pipes/text-length.pipe';
 
 
 @Component({
@@ -32,6 +33,7 @@ import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
     DatePipe,
     UpperCasePipe,
     CurrencyPipe,
+    TextLengthPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
