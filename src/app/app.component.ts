@@ -1,21 +1,17 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {HttpService} from './shared/services/http.service';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 import {TABLE_COLUMNS} from './mock/table-data';
 import {ProductInterface} from './shared/types/product.interface';
 import {CurrencyPipe, DatePipe, UpperCasePipe} from '@angular/common';
 import {TextLengthPipe} from './shared/pipes/text-length.pipe';
-import {catchError, from, map, Observable, of, switchAll, tap} from 'rxjs';
-import {DialogComponent} from './dialog/dialog.component';
+import {catchError, from, map, Observable, switchAll, tap} from 'rxjs';
+import {MATERIAL_MODULES} from './shared/mock/material.modules.mock';
+import {UtilsService} from './shared/services/utils.service';
 
 
 @Component({
@@ -23,19 +19,11 @@ import {DialogComponent} from './dialog/dialog.component';
   standalone: true,
   imports: [
     RouterOutlet,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
     DatePipe,
     UpperCasePipe,
     CurrencyPipe,
     TextLengthPipe,
+    MATERIAL_MODULES
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -51,6 +39,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
 
   ngOnInit() {
     this.getAllProducts();
@@ -66,7 +55,7 @@ export class AppComponent implements OnInit {
   }
 
   openDialog(data: any = null, expectedResult: string): Observable<string | undefined> {
-    return from(import('./dialog/dialog.component')).pipe(
+    return from(import('./components/dialog/dialog.component')).pipe(
       map(({DialogComponent}) => {
         return this.dialog.open(DialogComponent, {
           width: '40%',
@@ -79,10 +68,7 @@ export class AppComponent implements OnInit {
           console.log(`Товар успешно ${expectedResult.trim()}`);
         }
       }),
-      catchError(err => {
-        console.error('Ошибка при закрытии диалогового окна:', err);
-        return of(undefined);
-      })
+      catchError(this.utilsService.errorHandler('OPEN DIALOG'))
     );
   }
 
@@ -98,7 +84,8 @@ export class AppComponent implements OnInit {
     this.httpService.deleteData('productsList', id).subscribe({
       next: () => {
         console.log('Товар успешно удален');
-      }
+      },
+      error: catchError(this.utilsService.errorHandler('DELETE'))
     });
   }
 
